@@ -11,8 +11,10 @@ class RecetteControleurController extends AbstractController
     /**
      * @Route("/recettes", name="recettes")
      */
-    public function index()
+    public function index(RecetteRepository $recette)
     {
+        $recettes = $recette->findAll();
+
         return $this->render('recette/index.html.twig', [
             'test' => 'c moi',
         ]);
@@ -23,10 +25,13 @@ class RecetteControleurController extends AbstractController
      */
     public function show(RecetteRepository $recette, $id ){
 
-        $recettes = $recette->findAll();
+        $recettes = $recette->find($id);
+        
+    //$difficulte = $recettes->getDifficulte()->getNomDifficulte();
 
         return $this->render('recette/show.html.twig', [
             'recette' => $recettes,
+            //'difficulte' => $difficulte,
         ]);
     }
 }
