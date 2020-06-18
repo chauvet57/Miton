@@ -4,15 +4,17 @@
 {% block title %}Miton.com{% endblock %}
 
 {% block body %}
-{% include 'navbar.html.twig' %}
 
+
+{# mise en forme des cartes recettes#}
 <div class="card">
    
 {% for recette in recettes %}
 
  <h1> {{ recette.nomrecette }} </h1>
-{# <a href="{{ path ('recette', recette.id) }}  ">Clic moi</a> #}
- <a href=" /recettes/{{ recette.id }} ">clic moi </a> 
+ {#<a href="{{ path ('recette')}}  ">Clic moi</a>  #}
+ <a href=" /recettes/{{ recette.id }} ">clic moi </a>
+ 
 {% endfor %}
     
 </div>

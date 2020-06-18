@@ -4,15 +4,9 @@
 
 {% block body %}
 <body class="container col-md-5 text-center" style="background:gray;margin-top:200px">
-<form action="{{ path ('recettes')}}" method="post">
+<form action="{{ path ('app_login')}}" method="post">
     {% if error %}
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
-
-    {% if app.user %}
-        <div >
-            Tu es déjà connecté {{ app.user.username }}, <a href="{{ path('app_logout') }}">Se deconnecter</a>
-        </div>
     {% endif %}
 
 <div class="card border-success " >

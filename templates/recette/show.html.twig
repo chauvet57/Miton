@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello RecetteControleurController!{% endblock %}
+{% block title %}Miton.com{% endblock %}
 
 {% block body %}
 <style>
@@ -13,13 +13,51 @@
 
 
     <h1> {{ recette.nomrecette }} </h1>
+    <label>Moyenne : {{ moyenne }}</label>
         <img src="{{ recette.image }}">
 
-        {{ recette.difficulte.nomdifficulte }}
-         {{ recette.etape.etapes }}
-     
+        {{ recette.difficulte.nomdifficulte }}<br>
+        {{ recette.prix.nomprix }}<br>
+        {{ recette.etape.etapes }}<br>
+        {{ recette.user.pseudo }}<br>
+        {{ recette.temps|date("H:i:s") }}<br>
+        {{ recette.nombrepersonne }}<br>
 
 
-    
+
 </div>
+
+<div>
+
+{{ form_start(commentaires, {'method': 'POST'}) }}
+
+    {% if not is_granted('ROLE_EDITOR') %} 
+        {{ form_row(commentaires.pseudo) }}
+    {% else %}   
+        {{ form_row(commentaires.pseudo, {'value': app.user.pseudo }) }}
+    {% endif %}  
+        {{ form_row(commentaires.commentaire) }}
+        {{ form_row(commentaires.note) }}
+
+ <button class="btnValide col-3">{{ button| default('Envoyer') }}</button>
+
+{{ form_end(commentaires) }}
+
+
+
+</div>
+<br><br>
+
+<div>
+
+{% for commentAll in commentAlls %}
+
+{{ commentAll.commentaire}}
+{{ commentAll.pseudo}}
+{{ commentAll.note}}
+
+{% endfor %}
+
+</div>
+
 {% endblock %}

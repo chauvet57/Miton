@@ -6,7 +6,7 @@ use App\Repository\RecetteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use App\Entity\Commentaire;
 /**
  * @ORM\Entity(repositoryClass=RecetteRepository::class)
  */
@@ -244,6 +244,18 @@ class Recette
     public function getCommentaire(): Collection
     {
         return $this->commentaire;
+    }
+
+    public function getMoyenneNote(): float {
+        $moyenne = 0;
+        $commentaire = $this->getCommentaire();
+        foreach ($commentaire as $note) {
+
+            $moyenne += $note->getNote()->getNomNote();
+            
+        }
+        
+        return round($moyenne/$commentaire->count(),1);
     }
 
     public function addCommentaire(Commentaire $commentaire): self
