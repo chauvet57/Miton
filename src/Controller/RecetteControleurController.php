@@ -17,6 +17,7 @@ class RecetteControleurController extends AbstractController
 
         return $this->render('recette/index.html.twig', [
             'test' => 'c moi',
+            'recettes' => $recettes,
         ]);
     }
 
