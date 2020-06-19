@@ -13,21 +13,26 @@
 
 {# boucle des categorie #}
 
+
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">###</a>
       </li>
 
+     
 {# boucle des categorie fin#}
       {% if app.user %}
-        <div >
-            Tu es déjà connecté {{ app.user.pseudo }}, 
-            <li class="nav-item"> 
-                <a href="{{ path('app_logout') }}">Se deconnecter</a>
+      
+        
+            <li class="nav-item">
+                <a class="nav-link">{{ app.user.pseudo }} </a>
             </li>
-        </div>
+            <li class="nav-item"> 
+                <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
+            </li>
+        
         {% else %}
         <li class="nav-item">
-            <a class="nav-link" href="{{ path ('app_login') }}">Login</a>
+            <a class="nav-link" href="{{ path ('app_login') }}">Se connecter</a>
         </li>
     {% endif %}
       
@@ -35,7 +40,7 @@
     </ul>
     <form class="form-inline my-2 my-lg-0">
     {# function recherche en js ? #}
-      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+      <input class="form-control mr-sm-2" type="search" placeholder="Rechercher">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
     </form>
   </div>

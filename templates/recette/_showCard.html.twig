@@ -1,0 +1,16 @@
+
+ 
+    <div class="card col-lg-4" >
+    <img src="{{ recette.image }}" class="card-img-top mt-3" alt="...">
+        <div class="card-body">
+            <h4 class="card-title">{{ recette.nomrecette }}</h4>   
+            <p class="card-text">Pour : {{ recette.nombrepersonne }} personnes</p>
+            <p class="card-text">Recette proposée par :  {{ recette.user.pseudo }}</p>
+            <p class="card-text">Noté : {{ moyenne }}/5 ({{ totalNote }})</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Difficulté : {{ recette.difficulte.nomdifficulte }}</li>
+            <li class="list-group-item">Prix : {{ recette.prix.nomprix }}</li>
+            <li class="list-group-item">Temps : {{ recette.temps|date("H:i") }}</li>
+        </ul>
+    </div>

@@ -3,29 +3,54 @@
 {% block title %}Miton.com{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="jumbotron row">
 
-<div class="example-wrapper">
+        {% include 'recette/_showCard.html.twig' %}
+        <div class="col-lg-4">
+        <h2>Etapes</h2>
+       
+        {% set res = recette.twig_json_decode(recette.etape.getEtapes) %}
+        
+        {% for key, r in res %}
+
+            <div>
+            <p> Etape : {{ key }}</p>   
+            <p>{{ r }}</p>
+            </div>
+        {% endfor %}
+        </div>
+        <div class="col-lg-4">
+            <div class="column">
+                <div>
+                <h2>Ingredient</h2>
+
+                </div>
+                <div>
+                <div class="row">
+                <h2>Commentaires</h2>
+                <a type="button" class="nav-link " >Laisser un commentaire</a>
+                </div>
+                    <div style="height:150px;overflow:auto">
+
+                        {% for commentAll in commentAlls %}
+
+                            {% include 'recette/_showCommentaire.html.twig' %}
+
+                        {% endfor %}
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+{# donnee brut #}
 
 
-
-    <h1> {{ recette.nomrecette }} </h1>
-    <label>Moyenne : {{ moyenne }}</label>
-        <img src="{{ recette.image }}">
-
-        {{ recette.difficulte.nomdifficulte }}<br>
-        {{ recette.prix.nomprix }}<br>
         {{ recette.etape.etapes }}<br>
-        {{ recette.user.pseudo }}<br>
-        {{ recette.temps|date("H:i:s") }}<br>
-        {{ recette.nombrepersonne }}<br>
 
 
 
-</div>
+{##}
+
 
 <div>
 
@@ -39,7 +64,7 @@
         {{ form_row(commentaires.commentaire) }}
         {{ form_row(commentaires.note) }}
 
- <button class="btnValide col-3">{{ button| default('Envoyer') }}</button>
+ <button class="btnValide col-3">{{ button| default('Poster') }}</button>
 
 {{ form_end(commentaires) }}
 
@@ -48,16 +73,6 @@
 </div>
 <br><br>
 
-<div>
 
-{% for commentAll in commentAlls %}
-
-{{ commentAll.commentaire}}
-{{ commentAll.pseudo}}
-{{ commentAll.note}}
-
-{% endfor %}
-
-</div>
 
 {% endblock %}

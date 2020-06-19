@@ -246,17 +246,30 @@ class Recette
         return $this->commentaire;
     }
 
+    /**
+     * @return $moyenne float
+     */
     public function getMoyenneNote(): float {
         $moyenne = 0;
         $commentaire = $this->getCommentaire();
         foreach ($commentaire as $note) {
 
             $moyenne += $note->getNote()->getNomNote();
-            
         }
-        
-        return round($moyenne/$commentaire->count(),1);
+        //boucle verif/0
+        if($commentaire->count()){
+            $moyenne = round($moyenne/$commentaire->count(),1);
+        } return $moyenne;
     }
+
+    public function getTotalNote(): int {
+        
+        $commentaire = $this->getCommentaire();
+
+        return $commentaire->count();
+    }
+
+
 
     public function addCommentaire(Commentaire $commentaire): self
     {
@@ -315,5 +328,10 @@ class Recette
         $this->etape = $etape;
 
         return $this;
+    }
+
+    public function twig_json_decode($json)
+    {
+        return json_decode($json, true);
     }
 }

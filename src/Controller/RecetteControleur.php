@@ -9,7 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\RecetteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Recette;
-use App\Repository\CommentaireRepository;
+use App\Repository\CategorieRepository;
+
 
 class RecetteControleur extends AbstractController
 {
@@ -21,20 +22,24 @@ class RecetteControleur extends AbstractController
         $recettes = $recette->findAll();
 
         return $this->render('recette/index.html.twig', [
-            'recettes' => $recettes,
+            'recettes' => $recettes
+            
         ]);
     }
 
     /**
      * @Route("/recettes/{id}", name="recette", methods={"GET|POST"})
      */
-    public function show(Recette $recette,Request $request ){
+    public function show(Recette $recette,Request $request){
 
         //tout les commentaires
         $commentAlls = $recette->getCommentaire();
 
         //moyenne des notes
-        $moyenne = $recette->getMoyenneNote(); 
+        $moyenne = $recette->getMoyenneNote();
+        
+        //nombre de note
+        $totalNote = $recette->getCommentaire()->count();
 
         //formulaire
         $commentaire = new Commentaire();
@@ -57,6 +62,7 @@ class RecetteControleur extends AbstractController
             'recette' => $recette,
             'commentAlls' => $commentAlls,
             'moyenne' => $moyenne,
+            'totalNote' => $totalNote,
             'commentaires' => $form->createView()
            
         ]);

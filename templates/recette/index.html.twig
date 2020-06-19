@@ -6,16 +6,13 @@
 {% block body %}
 
 
-{# mise en forme des cartes recettes#}
-<div class="card">
-   
+
+<div class="jumbotron">   
 {% for recette in recettes %}
 
- <h1> {{ recette.nomrecette }} </h1>
- {#<a href="{{ path ('recette')}}  ">Clic moi</a>  #}
- <a href=" /recettes/{{ recette.id }} ">clic moi </a>
- 
+ {% include 'recette/_indexCard.html.twig' %}
+
 {% endfor %}
-    
-</div>
+</div>   
+
 {% endblock %}
