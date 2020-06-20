@@ -5,12 +5,10 @@
 
 {% block body %}
 
-
-
 <div class="jumbotron">   
 {% for recette in recettes %}
 
- {% include 'recette/_indexCard.html.twig' %}
+ {% include 'cardTemplates/_indexCard.html.twig' %}
 
 {% endfor %}
 </div>   

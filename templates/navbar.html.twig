@@ -22,9 +22,14 @@
 {# boucle des categorie fin#}
       {% if app.user %}
       
-        
             <li class="nav-item">
                 <a class="nav-link">{{ app.user.pseudo }} </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link">Mes Recettes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('recettes_new') }}">Publier une recette</a>
             </li>
             <li class="nav-item"> 
                 <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>

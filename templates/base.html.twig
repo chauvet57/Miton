@@ -22,6 +22,42 @@
 
 
         {% block javascripts %}
+        <script>
+            var cptEtape = 0;
+            var cptIngredient = 0;
+
+            let btnAjoutEtape = document.getElementById("AjoutEtape");
+            btnAjoutEtape.addEventListener("click", function () { cptEtape++, cloneEtape(cptEtape) });
+            let btnAjoutIngredient = document.getElementById("AjoutIngredient");
+            btnAjoutIngredient.addEventListener("click", function () { cptIngredient++, cloneIngredient(cptIngredient) });
+
+            function cloneEtape(cptEtape) {
+        
+                let etapes = document.getElementById("etapes");
+                let txtEtape = document.createElement("textarea");
+                let cln = txtEtape.cloneNode(true);
+                cln.name = 'etape['+ cptEtape + ']';
+                
+                etapes.appendChild(cln);
+            }
+
+            function cloneIngredient(cptIngredient){
+
+                let tbody = document.getElementById('ingredients');
+                let trIngredient = document.getElementById('ingredient1');
+                let cln = trIngredient.cloneNode(true);
+                cln.id = "ingredient" + cptIngredient;
+                cln.cells[1].children[0].name = 'i' + cptIngredient +'[aliment]' ;
+                cln.cells[2].children[0].name = 'i' + cptIngredient +'[precision]';
+                cln.cells[3].children[0].name = 'i' + cptIngredient +'[quantite]';
+                cln.cells[4].children[0].name = 'i' + cptIngredient +'[unite]';
+
+                ingredients.appendChild(cln);
+            }
+
+
+
+        </script>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>

@@ -5,13 +5,10 @@
 {% block body %}
     <h1>Create new Etape</h1>
 
-    {#{{ include('etape/_form.html.twig') }}#}
+{{ include('etape/_form.html.twig') }}
 
-      <form action="{{ path('etape_new') }}" method="POST">
-    <textarea name="1" id="" cols="30" rows="10"></textarea>
-    <textarea name="2" id="" cols="30" rows="10"></textarea>
-    <input type="submit" value="clic me">
-    </form>
-
-    <a href="{{ path('etape_index') }}">back to list</a>
+    
 {% endblock %}
+
+
+

@@ -31,27 +31,34 @@ class EtapeController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $etapes = array();
-        $test = $request->request->all();
+        $etape = new Etape();
+        $form = $this->createForm(EtapeType::class, $etape);
+        $form->handleRequest($request);
 
-//dd(json_encode($test));
+        if ($form->isSubmitted() && $form->isValid()) {
+            //$entityManager = $this->getDoctrine()->getManager();
+            //$entityManager->persist($etape);
+            //$entityManager->flush();
+            dd(gettype($form));
+            return $this->redirectToRoute('etape_index');
+        }
+
+        return $this->render('etape/new.html.twig', [
+            'etape' => $etape,
+            'form' => $form->createView(),
+        ]);
+
+        /*$test = $request->request->all();
 
         $etape = new Etape();
         $etape->setEtapes(json_encode($test));
-        //$form = $this->createForm(EtapeType::class, $etape);
-        //$form->handleRequest($request);
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($etape);
+        $entityManager->flush();*/
 
-        //if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($etape);
-            $entityManager->flush();
-
-            //return $this->redirectToRoute('etape_index');
-        //}
-
-        return $this->render('etape/new.html.twig', [
-            //'etape' => $etape,
-            //'form' => $form->createView(),
+            return $this->render('etape/new.html.twig', [
+         
         ]);
     }
 

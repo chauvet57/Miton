@@ -5,7 +5,7 @@
 {% block body %}
     <div class="jumbotron row">
 
-        {% include 'recette/_showCard.html.twig' %}
+        {% include 'cardTemplates/_showCard.html.twig' %}
         <div class="col-lg-4">
         <h2>Etapes</h2>
        
@@ -13,10 +13,8 @@
         
         {% for key, r in res %}
 
-            <div>
-            <p> Etape : {{ key }}</p>   
-            <p>{{ r }}</p>
-            </div>
+        {% include 'cardTemplates/_descriptionCard.html.twig' %}
+
         {% endfor %}
         </div>
         <div class="col-lg-4">
@@ -34,7 +32,7 @@
 
                         {% for commentAll in commentAlls %}
 
-                            {% include 'recette/_showCommentaire.html.twig' %}
+                            {% include 'cardTemplates/_showCommentaire.html.twig' %}
 
                         {% endfor %}
                     </div>
@@ -42,15 +40,6 @@
             </div>
         </div>
     </div>
-{# donnee brut #}
-
-
-        {{ recette.etape.etapes }}<br>
-
-
-
-{##}
-
 
 <div>
 
