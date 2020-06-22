@@ -3,11 +3,21 @@
 {% block title %}Nouvelle recette{% endblock %}
 
 {% block body %}
+    
+
+<div class="container col-10">
     <h1>Ma nouvelle recette</h1>
+    {{form_start(recette,{'action': path('recettes_new')}) }}
 
-    <form action="{{ path ('_new') }}" method="POST">
-
-        {# section ingredients #}
+    {# section etapes #}
+        <div class="container jumbotron">
+            <div id="etapes">{{ form_row( recette.etape) }}</div>
+            <div>
+                <button type="button" id="AjoutEtape" >Ajouter une étape</button>
+            </div>
+        </div>    
+    {# fin section etapes #}    
+    {# section ingredients #}
         <div class="container jumbotron">
             <table class="table text-center"  >
             <thead>
@@ -20,7 +30,6 @@
                 </tr>
             </thead>
             <tbody id="ingredients">
-            
                 <tr id="ingredient1">
                     <td>
                         <select class="form-control" style="background-color: transparent;border:none;" >
@@ -30,45 +39,46 @@
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" name="i0[aliment]" style="background-color: transparent;border:none;">
+                        <select class="form-control" name="recette[ingredient][0][aliment]" style="background-color: transparent;border:none;">
                             {% for aliment in aliments %}
                                 <option  value="{{ aliment.nomaliment }}">{{ aliment.nomaliment }}</option>
                             {% endfor %}
                         </select>
                     </td>
                     <td>
-                        <input type="text" name="i0[precision]" style="background-color: transparent;border:none;height:38px;" placeholder="ex: poitrine de ">
+                        <input type="text" name="recette[ingredient][0][precision]" style="background-color: transparent;border:none;height:38px;" placeholder="ex: poitrine de ">
                     </td>
                     <td>
-                        <input type="number" name="i0[quantite]" style="background-color: transparent;border:none;height:38px;" placeholder="quantité">
+                        <input type="number" name="recette[ingredient][0][quantite]" style="background-color: transparent;border:none;height:38px;" placeholder="quantité">
                     </td>
                     <td>
-                        <select class="form-control" name="i0[unite]" style="background-color: transparent;border:none;">
+                        <select class="form-control" name="recette[ingredient][0][unite]" style="background-color: transparent;border:none;">
                             {% for unite in unites %}
                                 <option value="{{ unite.nomunite }}">{{ unite.nomunite }}</option>
                             {% endfor %}
                         </select>
                     </td>
                 </tr>
-               
             </tbody>
             </table>
-            <div>
-                <button type="button" id="AjoutIngredient" >Ajouter un ingrédient</button>
-            </div>
+                <div>
+                    <button type="button" id="AjoutIngredient" >Ajouter un ingrédient</button>
+                </div>
         </div>    
-        {# fin section ingredients #}
-        {# section etapes #}
-        <div class="container jumbotron">
-            <div id="etapes"></div>
-            <div>
-                <button type="button" id="AjoutEtape" >Ajouter une étape</button>
-            </div>
-        </div>    
-        {# fin section etapes #}    
-    
-    <input type="submit" value="Valider">
-    </form>
+            {# fin section ingredients #}
+
+            
+            <select class="form-control" name="recette[categorie]">
+                {% for categorie in categories %}
+                    <option  value="{{ categorie.id}}">{{ categorie.categoriename}}</option>
+                {% endfor %}
+             </select>
+
+
+    {{ form_row(recette.image)}}
+    {{ form_widget(recette.valider) }}
+    {{form_end(recette) }}
+</div>  
 
     
 {% endblock %}

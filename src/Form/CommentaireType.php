@@ -18,11 +18,11 @@ use Symfony\Component\Security\Core\Security;
 class CommentaireType extends AbstractType
 {
 
-    private $noteRepository;
+   
     private $security;
-    public function __construct(NoteRepository $noteRepository,Security $security)
+    public function __construct(Security $security)
     {
-        $this->noteRepository = $noteRepository;
+       
         $this->security = $security;
     }
 

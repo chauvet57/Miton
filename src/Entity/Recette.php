@@ -30,7 +30,7 @@ class Recette
     private $valide;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="string", length=255)
      */
     private $temps;
 
@@ -51,11 +51,16 @@ class Recette
 
     /**
      * @ORM\ManyToMany(targetEntity=Categorie::class, mappedBy="recette")
+     * @ORM\JoinTable(name="categorie_recette",
+     *       joinColumns={@ORM\JoinColumn(name="recette_id", referencedColumnName="id")},
+     *       inverseJoinColumns={@ORM\JoinColumn(name="categorie_id", referencedColumnName="id")}
+     *       )
      */
     private $categories;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Ingredient::class, inversedBy="recettes")
+     * @ORM\Column(type="text")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $ingredient;
 
@@ -83,7 +88,7 @@ class Recette
     private $difficulte;
 
     /**
-     * @ORM\OneToOne(targetEntity=Etape::class, cascade={"persist", "remove"})
+     * @ORM\Column(type="text")
      * @ORM\JoinColumn(nullable=false)
      */
     private $etape;
@@ -91,7 +96,6 @@ class Recette
     public function __construct()
     {
         $this->categories = new ArrayCollection();
-        $this->ingredient = new ArrayCollection();
         $this->commentaire = new ArrayCollection();
     }
 
@@ -124,12 +128,12 @@ class Recette
         return $this;
     }
 
-    public function getTemps(): ?\DateTimeInterface
+    public function getTemps()
     {
         return $this->temps;
     }
 
-    public function setTemps(\DateTimeInterface $temps): self
+    public function setTemps($temps)
     {
         $this->temps = $temps;
 
@@ -148,12 +152,12 @@ class Recette
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage()
     {
         return $this->image;
     }
 
-    public function setImage(string $image): self
+    public function setImage($image)
     {
         $this->image = $image;
 
@@ -200,28 +204,15 @@ class Recette
         return $this;
     }
 
-    /**
-     * @return Collection|Ingredient[]
-     */
-    public function getIngredient(): Collection
+    
+    public function getIngredient()
     {
         return $this->ingredient;
     }
 
-    public function addIngredient(Ingredient $ingredient): self
+    public function setIngredient($ingredient)
     {
-        if (!$this->ingredient->contains($ingredient)) {
-            $this->ingredient[] = $ingredient;
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        if ($this->ingredient->contains($ingredient)) {
-            $this->ingredient->removeElement($ingredient);
-        }
+        $this->ingredient = $ingredient;
 
         return $this;
     }
@@ -318,12 +309,13 @@ class Recette
         return $this;
     }
 
-    public function getEtape(): ?Etape
+    public function getEtape()
     {
-        return $this->etape;
+        
+        return $this->deserializer($this->etape);
     }
 
-    public function setEtape(Etape $etape): self
+    public function setEtape($etape)
     {
         $this->etape = $etape;
 
@@ -333,5 +325,10 @@ class Recette
     public function twig_json_decode($json)
     {
         return json_decode($json, true);
+    }
+
+    public function deserializer($param){
+
+        return unserialize($param);
     }
 }

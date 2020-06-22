@@ -9,11 +9,9 @@
         <div class="col-lg-4">
         <h2>Etapes</h2>
        
-        {% set res = recette.twig_json_decode(recette.etape.getEtapes) %}
-        
-        {% for key, r in res %}
+        {% for key, r in recette.etape %}
 
-        {% include 'cardTemplates/_descriptionCard.html.twig' %}
+            {% include 'cardTemplates/_descriptionCard.html.twig' %}
 
         {% endfor %}
         </div>
@@ -45,7 +43,7 @@
 
 {{ form_start(commentaires, {'method': 'POST'}) }}
 
-    {% if not is_granted('ROLE_EDITOR') %} 
+    {% if not is_granted('ROLE_USER') %} 
         {{ form_row(commentaires.pseudo) }}
     {% else %}   
         {{ form_row(commentaires.pseudo, {'value': app.user.pseudo }) }}

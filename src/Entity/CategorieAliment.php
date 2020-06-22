@@ -29,15 +29,12 @@ class CategorieAliment
      */
     private $aliment;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Ingredient::class, mappedBy="categorie_aliment")
-     */
-    private $ingredients;
+
 
     public function __construct()
     {
         $this->aliment = new ArrayCollection();
-        $this->ingredients = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -83,34 +80,5 @@ class CategorieAliment
         return $this;
     }
 
-    /**
-     * @return Collection|Ingredient[]
-     */
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
 
-    public function addIngredient(Ingredient $ingredient): self
-    {
-        if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients[] = $ingredient;
-            $ingredient->setCategorieAliment($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        if ($this->ingredients->contains($ingredient)) {
-            $this->ingredients->removeElement($ingredient);
-            // set the owning side to null (unless already changed)
-            if ($ingredient->getCategorieAliment() === $this) {
-                $ingredient->setCategorieAliment(null);
-            }
-        }
-
-        return $this;
-    }
 }

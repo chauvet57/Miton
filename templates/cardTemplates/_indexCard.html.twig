@@ -1,17 +1,13 @@
 
     <div class="card" style="width: 20rem;">
-    <img src="{{ recette.image }}" class="card-img-top" alt="...">
+    <img src="{{ asset('/upload/images/' ~ recette.image) }}" class="card-img-top" alt="...">
         <div class="card-body">
             <h5 class="card-title">{{ recette.nomrecette }}</h5>   
-           {# <p class="card-text">Pour : {{ recette.nombrepersonne }} personnes</p>
-            <p class="card-text">Recette proposée par :  {{ recette.user.pseudo }}</p>#}
-            
+
             <p class="card-text">Noté : {{ recette.getMoyenneNote }}/5 ({{ recette.getTotalNote }})</p>
         </div>
         <ul class="list-group list-group-flush">
-        {#    <li class="list-group-item">Difficulté : {{ recette.difficulte.nomdifficulte }}</li>
-            <li class="list-group-item">Prix : {{ recette.prix.nomprix }}</li>
-            <li class="list-group-item">Temps : {{ recette.temps|date("H:i") }}</li>#}
+        
             <a class="list-group-item nav-link" href=" /recettes/{{ recette.id }} ">Regarder la recette complète</a>
         </ul>
     </div>

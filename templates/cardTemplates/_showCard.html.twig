@@ -1,7 +1,7 @@
 
  
     <div class="card col-lg-4" >
-    <img src="{{ recette.image }}" class="card-img-top mt-3" alt="...">
+    <img src="{{ asset('/upload/images/' ~ recette.image) }}" class="card-img-top mt-3" alt="...">
         <div class="card-body">
             <h4 class="card-title">{{ recette.nomrecette }}</h4>   
             <p class="card-text">Pour : {{ recette.nombrepersonne }} personnes</p>
@@ -11,6 +11,6 @@
         <ul class="list-group list-group-flush">
             <li class="list-group-item">Difficulté : {{ recette.difficulte.nomdifficulte }}</li>
             <li class="list-group-item">Prix : {{ recette.prix.nomprix }}</li>
-            <li class="list-group-item">Temps : {{ recette.temps|date("H:i") }}</li>
+            <li class="list-group-item">Temps : {{ recette.deserializer(recette.temps).hour }} h {{ recette.deserializer(recette.temps).minute }} min</li>
         </ul>
     </div>

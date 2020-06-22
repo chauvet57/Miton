@@ -24,15 +24,6 @@ class UniteMesure
      */
     private $nom_unite;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Ingredient::class, mappedBy="unite_mesure")
-     */
-    private $ingredients;
-
-    public function __construct()
-    {
-        $this->ingredients = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -51,31 +42,4 @@ class UniteMesure
         return $this;
     }
 
-    /**
-     * @return Collection|Ingredient[]
-     */
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
-
-    public function addIngredient(Ingredient $ingredient): self
-    {
-        if (!$this->ingredients->contains($ingredient)) {
-            $this->ingredients[] = $ingredient;
-            $ingredient->addUniteMesure($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIngredient(Ingredient $ingredient): self
-    {
-        if ($this->ingredients->contains($ingredient)) {
-            $this->ingredients->removeElement($ingredient);
-            $ingredient->removeUniteMesure($this);
-        }
-
-        return $this;
-    }
 }
