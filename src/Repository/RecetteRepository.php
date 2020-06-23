@@ -19,6 +19,21 @@ class RecetteRepository extends ServiceEntityRepository
         parent::__construct($registry, Recette::class);
     }
 
+    public function findIdCat($value): ?Recette
+    {
+        $result = $this->createQueryBuilder('c')
+        
+            ->addSelect('r')
+            ->andWhere('c.id = :val')
+            ->setParameter('val', $value)
+            ->leftJoin('c.categories','r')
+            ->getQuery()
+            ->getOneOrNullResult()
+            
+        ;
+        return $result;
+    }
+    
     // /**
     //  * @return Recette[] Returns an array of Recette objects
     //  */

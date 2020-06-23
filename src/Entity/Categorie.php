@@ -26,6 +26,7 @@ class Categorie
 
     /**
      * @ORM\ManyToMany(targetEntity=Recette::class, inversedBy="categories")
+     * @ORM\JoinTable(name="categorie_recette")
      */
     private $recette;
 

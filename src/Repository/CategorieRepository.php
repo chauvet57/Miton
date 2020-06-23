@@ -35,16 +35,19 @@ class CategorieRepository extends ServiceEntityRepository
         ;
     }
     */
-
-    /*
+    
+    
     public function findOneBySomeField($value): ?Categorie
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
+        
+            ->addSelect('r')
+            ->andWhere('c.id = :val')
             ->setParameter('val', $value)
+            ->leftJoin('c.recette','r')
             ->getQuery()
             ->getOneOrNullResult()
         ;
     }
-    */
+    
 }

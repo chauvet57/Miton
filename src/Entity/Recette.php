@@ -45,16 +45,13 @@ class Recette
     private $image;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="text")
      */
-    private $images = [];
+    private $images;
 
     /**
      * @ORM\ManyToMany(targetEntity=Categorie::class, mappedBy="recette")
-     * @ORM\JoinTable(name="categorie_recette",
-     *       joinColumns={@ORM\JoinColumn(name="recette_id", referencedColumnName="id")},
-     *       inverseJoinColumns={@ORM\JoinColumn(name="categorie_id", referencedColumnName="id")}
-     *       )
+     * @ORM\JoinTable(name="categorie_recette")
      */
     private $categories;
 
@@ -97,6 +94,13 @@ class Recette
     {
         $this->categories = new ArrayCollection();
         $this->commentaire = new ArrayCollection();
+    }
+
+    public function setId(int $id){
+
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getId(): ?int
@@ -164,12 +168,12 @@ class Recette
         return $this;
     }
 
-    public function getImages(): ?array
+    public function getImages()
     {
         return $this->images;
     }
 
-    public function setImages(array $images): self
+    public function setImages($images)
     {
         $this->images = $images;
 
@@ -253,6 +257,15 @@ class Recette
         } return $moyenne;
     }
 
+    public function setMoyenneNote($moyNote)
+    {
+        $this->moyNote = $moyNote;
+
+        return $this;
+    }
+
+
+
     public function getTotalNote(): int {
         
         $commentaire = $this->getCommentaire();
@@ -260,6 +273,12 @@ class Recette
         return $commentaire->count();
     }
 
+    public function setTotalNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
 
 
     public function addCommentaire(Commentaire $commentaire): self
@@ -330,5 +349,11 @@ class Recette
     public function deserializer($param){
 
         return unserialize($param);
+    }
+
+    public function getValue($param){
+
+
+        return $param->getCategories()->getValues();
     }
 }

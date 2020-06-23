@@ -3,7 +3,7 @@
 {% block title %}Nouvelle recette{% endblock %}
 
 {% block body %}
-    
+{% include 'navbar.html.twig' %}   
 
 <div class="container col-10">
     <h1>Ma nouvelle recette</h1>
@@ -39,20 +39,20 @@
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" name="recette[ingredient][0][aliment]" style="background-color: transparent;border:none;">
+                        <select class="form-control" name="ingredients[0][aliment]" style="background-color: transparent;border:none;">
                             {% for aliment in aliments %}
                                 <option  value="{{ aliment.nomaliment }}">{{ aliment.nomaliment }}</option>
                             {% endfor %}
                         </select>
                     </td>
                     <td>
-                        <input type="text" name="recette[ingredient][0][precision]" style="background-color: transparent;border:none;height:38px;" placeholder="ex: poitrine de ">
+                        <input type="text" name="ingredients[0][precision]" style="background-color: transparent;border:none;height:38px;" placeholder="ex: poitrine de ">
                     </td>
                     <td>
-                        <input type="number" name="recette[ingredient][0][quantite]" style="background-color: transparent;border:none;height:38px;" placeholder="quantité">
+                        <input type="number" name="ingredients[0][quantite]" style="background-color: transparent;border:none;height:38px;" placeholder="quantité">
                     </td>
                     <td>
-                        <select class="form-control" name="recette[ingredient][0][unite]" style="background-color: transparent;border:none;">
+                        <select class="form-control" name="ingredients[0][unite]" style="background-color: transparent;border:none;">
                             {% for unite in unites %}
                                 <option value="{{ unite.nomunite }}">{{ unite.nomunite }}</option>
                             {% endfor %}

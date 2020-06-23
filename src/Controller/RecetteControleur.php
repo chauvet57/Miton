@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-
+use App\Entity\Categorie;
 use App\Entity\Commentaire;
 use App\Form\CommentaireType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,21 +19,30 @@ use App\Repository\PrixRepository;
 use App\Repository\UniteMesureRepository;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
+    /**
      * @Route("/recettes")
      */
 class RecetteControleur extends AbstractController
 {
+    private $categories;
+
+    public function __construct(CategorieRepository $categorie)
+    {
+        $this->categories = $categorie;
+    }
+
     /**
      * @Route("/", name="recettes")
      */
     public function index(RecetteRepository $recette)
     {
         $recettes = $recette->findAll();
+        
+       
 
         return $this->render('recette/index.html.twig', [
-            'recettes' => $recettes
-            
+            'recettes' => $recettes,
+            'categories' => $this->categories->findAll()
         ]);
  
     }
@@ -41,12 +50,12 @@ class RecetteControleur extends AbstractController
     /**
      * @Route("/new", name="recettes_new")
      */
-    public function recetteNew(Request $request,UniteMesureRepository $uniteMesure, CategorieAlimentRepository $categorieAliment, AlimentRepository $aliment,DifficulteRepository $difficulte,PrixRepository $pri,CategorieRepository $categorie): Response
+    public function recetteNew(Request $request,UniteMesureRepository $uniteMesure, CategorieAlimentRepository $categorieAliment, AlimentRepository $aliment,DifficulteRepository $difficulte,PrixRepository $pri): Response
     {
         $uniteMesures = $uniteMesure->findAll();
         $categorieAliments = $categorieAliment->findAll();
         $aliments = $aliment->findAll();
-        $categories = $categorie->findAll();
+        
 
         $recette = new Recette();
         $form = $this->createForm(RecetteType::class,$recette);
@@ -82,17 +91,17 @@ class RecetteControleur extends AbstractController
             //recuperation id
             $difficultes = $difficulte->find((int)$req['recette']['difficulte']);
             $prix = $pri->find((int)$req['recette']['prix']);
-            $categories = $categorie->find((int)$req['recette']['categorie']);
-            
+            $categorie = $this->categories->find((int)$req['recette']['categorie']);
+        //dd($req) ;   
             //serialisation des etapes,ingredient,temps
-            $etape = serialize($req['recette']['etape']);
-            $ingredient = serialize($req['recette']['ingredient']);
+            $etape = serialize($req['etapes']);
+            $ingredient = serialize($req['ingredients']);
             $temps = serialize($req['recette']['temps']);
-            
+           
             //recomposition de notre objet recette
             $recette->setNomRecette($req['recette']['nom_recette']);
             $recette->setTemps($temps);
-            $recette->setNombrePersonne($req['recette']['nombre_personne']);
+            $recette->setNombrePersonne($form->get('nombre_personne')->getData());
             $recette->setImage($fichier);
             $recette->setImages($arImg);
             $recette->setIngredient($ingredient);
@@ -101,8 +110,8 @@ class RecetteControleur extends AbstractController
             $recette->setEtape($etape);
             $recette->setDifficulte($difficultes);
             $recette->setPrix($prix);
-            $recette->addCategory($categories);
-
+            $recette->addCategory($categorie);
+//dd($recette); 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($recette);
             $entityManager->flush();
@@ -115,7 +124,7 @@ class RecetteControleur extends AbstractController
                     'unites' => $uniteMesures,
                     'categorieAliments' => $categorieAliments,
                     'aliments' => $aliments,
-                    'categories' => $categories,
+                    'categories' => $this->categories->findAll(),
                     'recette' => $form->createView()
                     
                 ]);
@@ -124,7 +133,7 @@ class RecetteControleur extends AbstractController
  
 
     /**
-     * @Route("/{id}",requirements={"id": "\d+"}, name="recette", methods={"GET|POST"})
+     * @Route("/{id}",requirements={"id": "\d+"}, name="recette_show", methods={"GET","POST"})
      */
     public function show(Recette $recette,Request $request){
 
@@ -143,7 +152,7 @@ class RecetteControleur extends AbstractController
         $form -> handleRequest($request);
   
         if($form->isSubmitted() && $form->isValid()){
-//dd($form);
+
             $commentaire->setRecette($recette);
             
 
@@ -160,11 +169,27 @@ class RecetteControleur extends AbstractController
             'commentAlls' => $commentAlls,
             'moyenne' => $moyenne,
             'totalNote' => $totalNote,
+            'categories' => $this->categories->findAll(),
             'commentaires' => $form->createView()
            
         ]);
     }
 
+    /**
+     * @Route("/categorie/{id}", name="recettes_categorie")
+     */
+    public function showCategorie(RecetteRepository $recette, $id)
+    {
+        $recettes = $this->categories->findOneBySomeField($id);
+
+        //dd($recettes->getRecette());
+
+        return $this->render('recette/index.html.twig', [
+            'recettes' => $recettes->getRecette(),
+            'categories' => $this->categories->findAll()
+        ]);
+ 
+    }
     
 
 }

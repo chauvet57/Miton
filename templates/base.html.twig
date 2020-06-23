@@ -8,7 +8,7 @@
         {% endblock %}
     </head>
     <body >
-        {% include 'navbar.html.twig' %}
+        
 
         {% for message in app.flashes('success') %}
             <div class="alert alert-success">
@@ -35,14 +35,14 @@
 
         //recuperation de la balise form_twig
             let test = document.getElementById('recette_etape');
-            test.name = 'recette[etape][0]';
+            test.name = 'etapes[0][etape]';
 
         //fonction de clonage etape du champ ,set_name
             function cloneEtape(cptEtape) {
                
                 let divEtape = document.getElementById('etapes');
                 let clnTest = test.cloneNode(true);
-                clnTest.name = 'recette[etape]['+ cptEtape +']';
+                clnTest.name = 'etapes['+ cptEtape +'][etape]';
                 etapes.appendChild(clnTest);
 
             }
@@ -54,10 +54,10 @@
                 let trIngredient = document.getElementById('ingredient1');
                 let cln = trIngredient.cloneNode(true);
                 cln.id = "ingredient" + cptIngredient;
-                cln.cells[1].children[0].name = 'recette[ingredient][' + cptIngredient +'][aliment]' ;
-                cln.cells[2].children[0].name = 'recette[ingredient][' + cptIngredient +'][precision]';
-                cln.cells[3].children[0].name = 'recette[ingredient][' + cptIngredient +'][quantite]';
-                cln.cells[4].children[0].name = 'recette[ingredient][' + cptIngredient +'][unite]';
+                cln.cells[1].children[0].name = 'ingredients[' + cptIngredient +'][aliment]' ;
+                cln.cells[2].children[0].name = 'ingredients[' + cptIngredient +'][precision]';
+                cln.cells[3].children[0].name = 'ingredients[' + cptIngredient +'][quantite]';
+                cln.cells[4].children[0].name = 'ingredients[' + cptIngredient +'][unite]';
 
                 ingredients.appendChild(cln);
             }

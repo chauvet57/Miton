@@ -8,6 +8,6 @@
         </div>
         <ul class="list-group list-group-flush">
         
-            <a class="list-group-item nav-link" href=" /recettes/{{ recette.id }} ">Regarder la recette complète</a>
+            <a class="list-group-item nav-link" href="{{ path('recette_show',{'id': recette.id}) }} ">Regarder la recette complète</a>
         </ul>
     </div>
